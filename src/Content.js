@@ -36,34 +36,38 @@ const Content = () => {
   };
   return (
     <div>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <input
-              type="checkbox"
-              id={item.id}
-              onChange={() => handleChange(item.id)}
-              checked={item.checked}
-            />
-            <label
-              style={
-                item.checked
-                  ? {
-                      textDecoration: "line-through",
-                    }
-                  : null
-              }
-            >
-              {item.item}
-            </label>
-            <FaTrashAlt
-              role="button"
-              onClick={() => handleDelete(item.id)}
-              tabIndex="0"
-            />
-          </li>
-        ))}
-      </ul>
+      {items.length !== 0 ? (
+        <ul>
+          {items.map((item) => (
+            <li key={item.id}>
+              <input
+                type="checkbox"
+                id={item.id}
+                onChange={() => handleChange(item.id)}
+                checked={item.checked}
+              />
+              <label
+                style={
+                  item.checked
+                    ? {
+                        textDecoration: "line-through",
+                      }
+                    : null
+                }
+              >
+                {item.item}
+              </label>
+              <FaTrashAlt
+                role="button"
+                onClick={() => handleDelete(item.id)}
+                tabIndex="0"
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>Empty Lists</p>
+      )}
     </div>
   );
 };
