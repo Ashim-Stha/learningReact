@@ -36,11 +36,7 @@ function FormIn({ items, setItems, saveLocalstorage }) {
           value={newItem}
           onChange={(e) => setnewItem(e.target.value)}
         />
-        <button
-          type="submit"
-          aria-label="addItem"
-          onClick={inputRef.current.focus()}
-        >
+        <button type="submit" aria-label="addItem">
           <FaPlus />
         </button>
       </form>

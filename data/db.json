@@ -2,6 +2,6 @@
   "items": [
     { "id": 1, "checked": true, "item": "hahah" },
     { "id": 2, "checked": false, "item": "blabla" },
-    { "id": 3, "checked": false, "item": "hello" }
+    { "id": 3, "checked": false, "item": "helloaayo" }
   ]
 }
