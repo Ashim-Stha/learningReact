@@ -8,6 +8,8 @@ import Content from "./Content";
 import Content1 from "./Content1";
 import FormIn from "./FormIn";
 import SearchItem from "./SearchItem";
+import ChangeColor from "./ChangeColor";
+
 function App() {
   const [items, setItems] = useState(
     //   [
@@ -51,7 +53,7 @@ function App() {
   };
   return (
     <div className="App">
-      <Header name="Ashim" />
+      {/* <Header name="Ashim" />
       <Body />
       <Hello />
       <Footer />
@@ -68,7 +70,8 @@ function App() {
         )}
         handleChange={handleChange}
         handleDelete={handleDelete}
-      />
+      /> */}
+      <ChangeColor />
     </div>
   );
 }
