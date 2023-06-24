@@ -9,6 +9,7 @@ import Content1 from "./Content1";
 import FormIn from "./FormIn";
 import SearchItem from "./SearchItem";
 import ChangeColor from "./ChangeColor";
+import ApiRequest from "./ApiRequest";
 
 function App() {
   // const [items, setItems] = useState(
@@ -41,8 +42,10 @@ function App() {
     const fetchItems = async () => {
       try {
         const response = await fetch(API_URL);
+
         if (!response.ok) throw Error("Didnot get expected data");
         const listItems = await response.json();
+
         setItems(listItems);
         // console.log(listItems);
         setfetchError(null);
@@ -64,17 +67,37 @@ function App() {
 
   const [search, setSearch] = useState("");
 
-  const handleChange = (id) => {
+  const handleCheck = async (id) => {
     // console.log(id);
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
     saveLocalstorage(listItems);
+
+    const myNewItem = listItems.filter((item) => item.id === id);
+
+    const updateOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ checked: myNewItem[0].checked }),
+    };
+
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await ApiRequest(reqUrl, updateOptions);
+    if (result) setfetchError(result);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const listItems = items.filter((item) => item.id !== id);
     saveLocalstorage(listItems);
+
+    const deleteOptions = {
+      method: "DELETE",
+    };
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await ApiRequest(reqUrl, deleteOptions);
   };
 
   const saveLocalstorage = (listItems) => {
@@ -92,6 +115,8 @@ function App() {
         items={items}
         setItems={setItems}
         saveLocalstorage={saveLocalstorage}
+        API_URL={API_URL}
+        setfetchError={setfetchError}
       />
       <SearchItem search={search} setSearch={setSearch} />
       <main>
@@ -108,7 +133,7 @@ function App() {
             items={items.filter((item) =>
               item.item.toLowerCase().includes(search.toLowerCase())
             )}
-            handleChange={handleChange}
+            handleCheck={handleCheck}
             handleDelete={handleDelete}
           />
         )}

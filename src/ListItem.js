@@ -1,7 +1,7 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
-const ListItem = ({ items, handleChange, handleDelete }) => {
+const ListItem = ({ items, handleCheck, handleDelete }) => {
   return (
     <ul>
       {items.map((item) => (
@@ -9,7 +9,7 @@ const ListItem = ({ items, handleChange, handleDelete }) => {
           <input
             type="checkbox"
             id={item.id}
-            onChange={() => handleChange(item.id)}
+            onChange={() => handleCheck(item.id)}
             checked={item.checked}
           />
           <label
