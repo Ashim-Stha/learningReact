@@ -34,6 +34,8 @@ const Content = () => {
     setItems(listItems);
     localStorage.setItem("listItems", JSON.stringify(listItems));
   };
+
+  console.log(JSON.stringify(items));
   return (
     <div>
       {items.length !== 0 ? (

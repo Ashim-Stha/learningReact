@@ -29,7 +29,7 @@ function App() {
     //     item: "hellohiii",
     //   },
     // ]
-    JSON.parse(localStorage.getItem("listItems"))
+    JSON.parse(localStorage.getItem("listItems")) || []
   );
 
   const [search, setSearch] = useState("");
@@ -43,7 +43,7 @@ function App() {
   };
 
   const handleDelete = (id) => {
-    const listItems = items.filter((item) => item.id != id);
+    const listItems = items.filter((item) => item.id !== id);
     saveLocalstorage(listItems);
   };
 
@@ -71,9 +71,12 @@ function App() {
         handleChange={handleChange}
         handleDelete={handleDelete}
       /> */}
+      <Content />
       <ChangeColor />
     </div>
   );
 }
 
 export default App;
+
+// npx json-server -p 3500 -w data/db.json

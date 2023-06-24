@@ -6,9 +6,11 @@ const ChangeColor = () => {
   // console.log(black)
   // localStorage.setItem("hexvalue", black);
 
-  const [color, setColor] = useState(JSON.parse(localStorage.getItem("color")));
+  const [color, setColor] = useState(
+    JSON.parse(localStorage.getItem("color")) || []
+  );
   const [hexvalue, setHexvalue] = useState(
-    JSON.parse(localStorage.getItem("hexvalue"))
+    JSON.parse(localStorage.getItem("hexvalue")) || []
   );
   const [isDarktext, setIsDarktext] = useState(true);
   const handleSubmit = (e) => {
@@ -39,7 +41,9 @@ const ChangeColor = () => {
         value={color}
         onChange={(e) => {
           setColor(e.target.value);
-          setHexvalue(colorNames(e.target.value));
+          setHexvalue(
+            colorNames(e.target.value) ? colorNames(e.target.value) : null
+          );
         }}
       />
       <button type="button" onClick={() => setIsDarktext(!isDarktext)}>
