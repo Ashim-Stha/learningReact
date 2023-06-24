@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useRef } from "react";
 import { FaPlus } from "react-icons/fa";
 
 function FormIn({ items, setItems, saveLocalstorage }) {
   const [newItem, setnewItem] = useState("");
+  const inputRef = useRef();
 
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
@@ -26,6 +28,7 @@ function FormIn({ items, setItems, saveLocalstorage }) {
         <label htmlFor="addItem">Add Item</label>
         <input
           autoFocus
+          ref={inputRef}
           type="text"
           id="addItem"
           required
@@ -33,7 +36,11 @@ function FormIn({ items, setItems, saveLocalstorage }) {
           value={newItem}
           onChange={(e) => setnewItem(e.target.value)}
         />
-        <button type="submit" aria-label="addItem">
+        <button
+          type="submit"
+          aria-label="addItem"
+          onClick={inputRef.current.focus()}
+        >
           <FaPlus />
         </button>
       </form>
