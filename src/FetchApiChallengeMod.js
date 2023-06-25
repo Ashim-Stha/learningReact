@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import FormforFetchApi from "./FormforFetchApi";
+import ListforFetchApi from "./ListforFetchApi";
 
 const FetchApiChallengeMod = () => {
   const [reqType, setReqType] = useState("");
@@ -8,9 +10,10 @@ const FetchApiChallengeMod = () => {
     const FetchApi = async () => {
       try {
         const response = await fetch(`${API_URL}${reqType}`);
+        if (!response.ok) throw Error("Not found");
         const result = await response.json();
-        console.log(result);
-        setItems(JSON.stringify(result));
+        // setItems(JSON.stringify(result));
+        setItems(result);
       } catch (err) {
         console.log(err.message);
       }
@@ -18,29 +21,25 @@ const FetchApiChallengeMod = () => {
 
     FetchApi();
   }, [reqType]);
-  const handleUsers = () => {
-    setReqType("users");
-  };
-  const handlePosts = () => {
-    setReqType("posts");
-  };
 
-  const handleComments = () => {
-    setReqType("comments");
-  };
   return (
-    <div>
-      <button type="button" onClick={handleUsers}>
-        Users
-      </button>
-      <button type="button" onClick={handlePosts}>
-        Posts
-      </button>
-      <button type="button" onClick={handleComments}>
-        Comments
-      </button>
-      {items}
-    </div>
+    // <div>
+    //   <button type="button" onClick={() => setReqType("users")}>
+    //     Users
+    //   </button>
+    //   <button type="button" onClick={() => setReqType("posts")}>
+    //     Posts
+    //   </button>
+    //   <button type="button" onClick={() => setReqType("comments")}>
+    //     Comments
+    //   </button>
+    //   {items}
+    // </div>
+
+    <>
+      <FormforFetchApi reqType={reqType} setReqType={setReqType} />
+      <ListforFetchApi items={items} />
+    </>
   );
 };
 
