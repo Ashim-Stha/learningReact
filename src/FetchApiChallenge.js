@@ -36,52 +36,63 @@ const FetchApiChallenge = () => {
   const handleUsers = async () => {
     if (apiUrl === "https://jsonplaceholder.typicode.com") {
       setapiUrl(`${apiUrl}/users`);
+      (async () => await fetchApi())();
     } else {
       setapiUrl("https://jsonplaceholder.typicode.com");
     }
-
-    (async () => await fetchApi())();
 
     if (await fetchApi()) {
       setboolValue(true);
     }
 
-    Users.push(await apiFetch);
+    Users.push(apiFetch);
     console.log(Users);
     // await fetchApi();
   };
+  const show = (arg) => {
+    while (arg) {
+      return "Loading";
+    }
+    return arg;
 
-  const handlePosts = async () => {
-    setapiUrl("https://jsonplaceholder.typicode.com");
-
-    if (apiUrl === "https://jsonplaceholder.typicode.com") {
-      setapiUrl(`${apiUrl}/posts`);
-    } else {
+    const handlePosts = async () => {
+      setapiFetch(null);
       setapiUrl("https://jsonplaceholder.typicode.com");
-    }
 
-    (async () => await fetchApi())();
+      if (apiUrl === "https://jsonplaceholder.typicode.com") {
+        setapiUrl(`${apiUrl}/posts`);
+        (async () => await fetchApi())();
+      } else {
+        setapiUrl("https://jsonplaceholder.typicode.com");
+      }
 
-    if (await fetchApi()) {
-      setboolValue(true);
-    }
+      if (await fetchApi()) {
+        setboolValue(true);
+      }
+    };
   };
   //   setapiUrl("https://jsonplaceholder.typicode.com");
   return (
     <>
       <div>
-        <button type="button" onClick={handleUsers}>
-          Users
-        </button>
-        <p>{boolValue && Users}</p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleUsers();
+          }}
+        >
+          <button type="submit">Users</button>
+          <p>{show(Users)}</p>
+        </form>
+
         {/* {`${JSON.stringify(apiFetch)}`} */}
       </div>
-      <div>
+      {/* <div>
         <button type="submit" onClick={handlePosts}>
           Posts
         </button>
         <p>{boolValue && `${JSON.stringify(apiFetch)}`}</p>
-      </div>
+      </div> */}
     </>
   );
 };

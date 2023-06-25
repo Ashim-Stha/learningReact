@@ -11,6 +11,7 @@ import SearchItem from "./SearchItem";
 import ChangeColor from "./ChangeColor";
 import ApiRequest from "./ApiRequest";
 import FetchApiChallenge from "./FetchApiChallenge";
+import FetchApiChallengeMod from "./FetchApiChallengeMod";
 
 function App() {
   // const [items, setItems] = useState(
@@ -140,7 +141,7 @@ function App() {
         )}
       </main> */}
 
-      <FetchApiChallenge />
+      <FetchApiChallengeMod />
       {/* <ChangeColor /> */}
     </div>
   );
