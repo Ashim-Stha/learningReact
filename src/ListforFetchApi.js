@@ -5,7 +5,7 @@ const ListforFetchApi = ({ items }) => {
     <ul>
       {items.map((item) => (
         <li key={item.id}>
-          {/* {JSON.stringify(item)} */}
+          {/* {JSON.stringify(item)}
           <div
             style={{
               display: "flex",
@@ -33,7 +33,8 @@ const ListforFetchApi = ({ items }) => {
             <p>{item.phone}</p>
             <p>{item.website}</p>
             <p>{JSON.stringify(item.company)}</p>
-          </div>
+          </div> */}
+          {Object.entries(JSON.stringify(item))}
         </li>
       ))}
     </ul>

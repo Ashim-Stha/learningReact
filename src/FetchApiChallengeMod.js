@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormforFetchApi from "./FormforFetchApi";
 import ListforFetchApi from "./ListforFetchApi";
-
+import Table from "./Table";
 const FetchApiChallengeMod = () => {
   const [reqType, setReqType] = useState("");
   const [items, setItems] = useState([]);
@@ -38,7 +38,8 @@ const FetchApiChallengeMod = () => {
 
     <>
       <FormforFetchApi reqType={reqType} setReqType={setReqType} />
-      <ListforFetchApi items={items} />
+      {/* <ListforFetchApi items={items} /> */}
+      <Table items={items} />
     </>
   );
 };
