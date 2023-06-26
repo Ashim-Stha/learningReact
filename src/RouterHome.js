@@ -1,10 +1,9 @@
 import React from "react";
+import RFeed from "./RFeed";
 
-const RouterHome = () => {
+const RouterHome = ({ posts }) => {
   return (
-    <div>
-      <h3>HOME</h3>
-    </div>
+    <main>{posts.length ? <RFeed posts={posts} /> : <p>Empty posts</p>}</main>
   );
 };
 

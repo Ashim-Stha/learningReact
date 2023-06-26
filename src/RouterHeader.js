@@ -1,7 +1,7 @@
 import React from "react";
 
-const RouterHeader = () => {
-  return <header>Header</header>;
+const RouterHeader = ({ content }) => {
+  return <header>{content}</header>;
 };
 
 export default RouterHeader;

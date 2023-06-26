@@ -11,25 +11,67 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  useHistory,
+  useNavigate,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 function App() {
+  const [search, setSearch] = useState("");
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      title: "My First Post",
+      datetime: "July 01, 2021 11:17:36 AM",
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+    },
+    {
+      id: 2,
+      title: "My 2nd Post",
+      datetime: "July 01, 2021 11:17:36 AM",
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+    },
+    {
+      id: 3,
+      title: "My 3rd Post",
+      datetime: "July 01, 2021 11:17:36 AM",
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+    },
+    {
+      id: 4,
+      title: "My Fourth Post",
+      datetime: "July 01, 2021 11:17:36 AM",
+      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!",
+    },
+  ]);
+
+  // const navigate = useNavigate();
+  const handleDelete = (id) => {
+    const newPost = posts.filter((post) => post.id !== id);
+    setPosts(newPost);
+    // navigate("/", { replace: true });
+  };
   return (
-    <div>
-      <RouterHeader />
-      <RouterNav />
-      <Router>
+    <Router>
+      <div>
+        <RouterHeader content="React Blog" />
+        <RouterNav search={search} setSearch={setSearch} />
+
         <Routes>
-          <Route exact path="/" element={<RouterHome />} />
+          <Route exact path="/" element={<RouterHome posts={posts} />} />
           <Route exact path="/post" element={<RouterNewPost />} />
-          <Route path="/post/:id" element={<RouterPostPage />} />
-          <Route path="about" element={<RouterAbout />} />
+          <Route
+            path="/post/:id"
+            element={
+              <RouterPostPage posts={posts} handleDelete={handleDelete} />
+            }
+          />
+          <Route path="/about" element={<RouterAbout />} />
           <Route path="*" element={<RouterMissing />} />
         </Routes>
-      </Router>
-      <RouterFooter />
-    </div>
+
+        <RouterFooter />
+      </div>
+    </Router>
   );
 }
 
