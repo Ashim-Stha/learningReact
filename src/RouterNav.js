@@ -15,11 +15,18 @@ const RouterNav = ({ search, setSearch, posts }) => {
         />
       </form>
 
-      <ul>
+      <ul
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          listStyle: "none",
+          gap: "5px",
+        }}
+      >
         {/* {posts.map((post) => (
           <RList key={posts.id} post={post} />
         ))} */}
-        <RList posts={posts} />
+        <RList />
       </ul>
     </nav>
   );

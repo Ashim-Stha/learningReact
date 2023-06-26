@@ -7,12 +7,7 @@ import RouterNewPost from "./RouterNewPost";
 import RouterPostPage from "./RouterPostPage";
 import RouterAbout from "./RouterAbout";
 import RouterMissing from "./RouterMissing";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -44,11 +39,27 @@ function App() {
     },
   ]);
 
-  // const navigate = useNavigate();
+  const [postTitle, setPostTitle] = useState("");
+  const [postBody, setPostBody] = useState("");
+
   const handleDelete = (id) => {
     const newPost = posts.filter((post) => post.id !== id);
     setPosts(newPost);
-    // navigate("/", { replace: true });
+  };
+
+  const handleSubmit = () => {
+    const date = new Date();
+    const len = posts.length - 1;
+    const newID = posts[len].id + 1;
+    console.log(newID);
+
+    const arr = [
+      ...posts,
+      { id: newID, title: postTitle, datetime: date.getDate(), body: postBody },
+    ];
+    setPosts(arr);
+    // posts.push(arr);
+    console.log(posts);
   };
   return (
     <Router>
@@ -58,7 +69,19 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<RouterHome posts={posts} />} />
-          <Route exact path="/post" element={<RouterNewPost />} />
+          <Route
+            exact
+            path="/post"
+            element={
+              <RouterNewPost
+                postTitle={postTitle}
+                setPostTitle={setPostTitle}
+                postBody={postBody}
+                setPostBody={setPostBody}
+                handleSubmit={handleSubmit}
+              />
+            }
+          />
           <Route
             path="/post/:id"
             element={
