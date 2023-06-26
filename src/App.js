@@ -9,6 +9,7 @@ import RouterAbout from "./RouterAbout";
 import RouterMissing from "./RouterMissing";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { format } from "date-fns";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -47,20 +48,33 @@ function App() {
     setPosts(newPost);
   };
 
-  const handleSubmit = () => {
-    const date = new Date();
-    const len = posts.length - 1;
-    const newID = posts[len].id + 1;
-    console.log(newID);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const datetime = format(new Date(), "MMMM dd,yyyy pp");
+    // const len = posts.length - 1;
+    // const newID = posts[len].id + 1;
+    // console.log(newID);
 
-    const arr = [
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    const newPost = [
       ...posts,
-      { id: newID, title: postTitle, datetime: date.getDate(), body: postBody },
+      { id: id, title: postTitle, datetime: datetime, body: postBody },
     ];
-    setPosts(arr);
-    // posts.push(arr);
-    console.log(posts);
+    setPosts(newPost);
+    setPostTitle("");
+    setPostBody("");
   };
+
+  useEffect(() => {
+    const handleSearch = () => {
+      const searchPosts = posts.filter(
+        (post) => post.title.toLowerCase() === search.toLowerCase()
+      );
+      setPosts(searchPosts);
+    };
+
+    handleSearch();
+  }, [search]);
   return (
     <Router>
       <div>

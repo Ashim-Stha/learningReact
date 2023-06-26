@@ -11,7 +11,13 @@ const RouterNewPost = ({
   const navigate = useNavigate();
   return (
     <main>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form
+        onSubmit={(e) => {
+          // (e) => e.preventDefault()
+          handleSubmit(e);
+          navigate("/");
+        }}
+      >
         <label htmlFor="title">Title:</label>
         <input
           type="text"
@@ -23,8 +29,7 @@ const RouterNewPost = ({
         />
 
         <label htmlFor="body">Body:</label>
-        <input
-          type="text"
+        <textarea
           id="body"
           placeholder="body"
           required
@@ -33,11 +38,11 @@ const RouterNewPost = ({
         />
 
         <button
-          type="button"
-          onClick={() => {
-            handleSubmit();
-            navigate("/");
-          }}
+          type="submit"
+          //   onClick={() => {
+          //     handleSubmit();
+          //     navigate("/");
+          //   }}
         >
           Submit
         </button>
