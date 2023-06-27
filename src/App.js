@@ -43,6 +43,8 @@ function App() {
   const [postTitle, setPostTitle] = useState("");
   const [postBody, setPostBody] = useState("");
 
+  const [searchResults, setSearchResults] = useState([]);
+
   const handleDelete = (id) => {
     const newPost = posts.filter((post) => post.id !== id);
     setPosts(newPost);
@@ -67,14 +69,17 @@ function App() {
 
   useEffect(() => {
     const handleSearch = () => {
-      const searchPosts = posts.filter(
-        (post) => post.title.toLowerCase() === search.toLowerCase()
+      const searchposts = posts.filter(
+        (post) =>
+          post.body.toLowerCase().includes(search.toLowerCase()) ||
+          post.title.toLowerCase().includes(search.toLowerCase())
       );
-      setPosts(searchPosts);
+      setSearchResults(searchposts.reverse());
+      // setPosts(searchPosts);
     };
 
     handleSearch();
-  }, [search]);
+  }, [posts, search]);
   return (
     <Router>
       <div>
@@ -82,7 +87,11 @@ function App() {
         <RouterNav search={search} setSearch={setSearch} />
 
         <Routes>
-          <Route exact path="/" element={<RouterHome posts={posts} />} />
+          <Route
+            exact
+            path="/"
+            element={<RouterHome posts={searchResults} />}
+          />
           <Route
             exact
             path="/post"
