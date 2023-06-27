@@ -5,6 +5,8 @@ const RouterFooter = () => {
   return (
     <footer
       style={{
+        display: "grid",
+        placeContent: "center",
         position: "absolute",
         bottom: 0,
       }}
