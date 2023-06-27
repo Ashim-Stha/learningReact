@@ -7,6 +7,7 @@ import RouterNewPost from "./RouterNewPost";
 import RouterPostPage from "./RouterPostPage";
 import RouterAbout from "./RouterAbout";
 import RouterMissing from "./RouterMissing";
+import REdit from "./REdit";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
@@ -46,26 +47,42 @@ function App() {
 
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleDelete = (id) => {
-    const newPost = posts.filter((post) => post.id !== id);
-    setPosts(newPost);
+  const [editTitle, setEditTitle] = useState("");
+  const [editBody, setEditBody] = useState("");
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/posts/${id}`);
+      const newPost = posts.filter((post) => post.id !== id);
+      setPosts(newPost);
+    } catch (err) {
+      console.log(`Error : ${err.message}`);
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const datetime = format(new Date(), "MMMM dd,yyyy pp");
     // const len = posts.length - 1;
     // const newID = posts[len].id + 1;
     // console.log(newID);
-
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
-    const newPost = [
-      ...posts,
-      { id: id, title: postTitle, datetime: datetime, body: postBody },
-    ];
-    setPosts(newPost);
-    setPostTitle("");
-    setPostBody("");
+    const newPost = {
+      id: id,
+      title: postTitle,
+      datetime: datetime,
+      body: postBody,
+    };
+
+    try {
+      const response = await api.post("/posts", newPost);
+      const allPosts = [...posts, response.data];
+      setPosts(allPosts);
+      setPostTitle("");
+      setPostBody("");
+    } catch (err) {
+      console.log(`Error : ${err.message}`);
+    }
   };
   useEffect(() => {
     const fetchPost = async () => {
@@ -95,6 +112,20 @@ function App() {
     );
     setSearchResults(searchposts.reverse());
   }, [posts, search]);
+
+  const handleEdit = async (id) => {
+    const datetime = format(new Date(), "MMMM dd,yyyy pp");
+    const editPost = posts.filter((post) => post.id == id);
+    const newPost = {
+      id: id,
+      title: editTitle,
+      datetime: datetime,
+      body: editBody,
+    };
+    const response = await api.put(`/edit/${id}`, newPost);
+    setPosts(response.data);
+    // const response = api.put(`/edit/${id}`,)
+  };
   return (
     <Router>
       <div>
@@ -124,6 +155,20 @@ function App() {
             path="/post/:id"
             element={
               <RouterPostPage posts={posts} handleDelete={handleDelete} />
+            }
+          />
+          <Route
+            exact
+            path="/edit/:id"
+            element={
+              <REdit
+                editBody={editBody}
+                setEditBody={setEditBody}
+                setEditTitle={setEditTitle}
+                editTitle={editTitle}
+                posts={posts}
+                handleEdit={handleEdit}
+              />
             }
           />
           <Route path="/about" element={<RouterAbout />} />
