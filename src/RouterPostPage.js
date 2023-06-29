@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 
-const RouterPostPage = ({ posts, handleDelete }) => {
+const RouterPostPage = ({ posts, handleDelete, handleEdit }) => {
   const { id } = useParams();
   const post = posts.find((post) => post.id.toString() === id);
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const RouterPostPage = ({ posts, handleDelete }) => {
           >
             Delete
           </button>
+
+          <Link to={`/edit/${id}`}>
+            <button type="button">Edit</button>
+          </Link>
         </article>
       )}
 

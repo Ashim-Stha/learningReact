@@ -115,15 +115,23 @@ function App() {
 
   const handleEdit = async (id) => {
     const datetime = format(new Date(), "MMMM dd,yyyy pp");
-    const editPost = posts.filter((post) => post.id == id);
-    const newPost = {
+    // const editPost = posts.filter((post) => post.id == id);
+    const editPost = {
       id: id,
       title: editTitle,
       datetime: datetime,
       body: editBody,
     };
-    const response = await api.put(`/edit/${id}`, newPost);
-    setPosts(response.data);
+    try {
+      const response = await api.put(`/posts/${id}`, editPost);
+
+      setPosts(
+        posts.map((post) => (post.id == id ? { ...response.data } : post))
+      );
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+
     // const response = api.put(`/edit/${id}`,)
   };
   return (
