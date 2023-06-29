@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import api from "./api/posts";
+import useWindowSize from "./hooks/useWindowSize";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -49,6 +50,8 @@ function App() {
 
   const [editTitle, setEditTitle] = useState("");
   const [editBody, setEditBody] = useState("");
+
+  const { width } = useWindowSize();
 
   const handleDelete = async (id) => {
     try {
@@ -137,7 +140,7 @@ function App() {
   return (
     <Router>
       <div>
-        <RouterHeader content="React Blog" />
+        <RouterHeader content="React Blog" width={width} />
         <RouterNav search={search} setSearch={setSearch} />
 
         <Routes>
