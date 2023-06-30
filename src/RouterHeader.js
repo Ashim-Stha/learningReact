@@ -1,6 +1,9 @@
 import React from "react";
 import { FaLaptop, FaMobileAlt, FaTabletAlt } from "react-icons/fa";
-const RouterHeader = ({ content, width }) => {
+import { useContext } from "react";
+import DataContext from "./context/DataContext";
+const RouterHeader = ({ content }) => {
+  const { width } = useContext(DataContext);
   return (
     <header>
       {content}

@@ -12,8 +12,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import api from "./api/posts";
-import useWindowSize from "./hooks/useWindowSize";
+
 import useAxiosFetch from "./hooks/useAxiosFetch";
+import { DataProvider } from "./context/DataContext";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -52,7 +53,6 @@ function App() {
   const [editTitle, setEditTitle] = useState("");
   const [editBody, setEditBody] = useState("");
 
-  const { width } = useWindowSize();
   const { data, fetchError, isLoading } = useAxiosFetch(
     "http://localhost:3500/posts"
   );
@@ -148,7 +148,9 @@ function App() {
   return (
     <Router>
       <div>
-        <RouterHeader content="React Blog" width={width} />
+        <DataProvider>
+          <RouterHeader content="React Blog" />
+        </DataProvider>
         <RouterNav search={search} setSearch={setSearch} />
 
         <Routes>
